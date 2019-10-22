@@ -9,6 +9,29 @@ pub struct Log {
     pub timestamp: DateTime<Utc>,
 }
 
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+pub struct DateTimeRange {
+    pub from: Option<DateTime<Utc>>,
+    pub until: Option<DateTime<Utc>>,
+}
+
+pub mod csv {
+    pub mod get {
+        use crate::DateTimeRange;
+        pub type Query = DateTimeRange;
+        // GETはファイルを返すのでResponse型の定義がない
+    }
+
+    pub mod post {
+        use serde_derive::*;
+
+        // CSVファイルを受け付けるのでリクエストデータはない
+        #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+        // 受領したログの数を返す
+        pub struct Response(pub usize);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
