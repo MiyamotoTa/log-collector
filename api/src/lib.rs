@@ -32,6 +32,31 @@ pub mod csv {
     }
 }
 
+pub mod logs {
+    pub mod get {
+        use crate::{DateTimeRange, Log};
+        use serde_derive::*;
+
+        pub type Query = DateTimeRange;
+
+        #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+        // 保存しているログをすべて返す
+        pub struct Response(pub Vec<Log>);
+    }
+
+    pub mod post {
+        use chrono::{DateTime, Utc};
+        use serde_derive::*;
+
+        #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+        pub struct Request {
+            pub user_agent: String,
+            pub response_time: i32,
+            pub timestamp: Option<DateTime<Utc>>,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
