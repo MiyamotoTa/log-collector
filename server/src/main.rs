@@ -4,6 +4,7 @@ extern crate diesel;
 use actix_web::http::Method;
 use actix_web::App;
 
+mod db;
 mod handlers;
 mod model;
 mod schema;
