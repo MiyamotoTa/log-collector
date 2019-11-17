@@ -1,26 +1,31 @@
+#[macro_use]
+extern crate diesel;
+
 use actix_web::http::Method;
 use actix_web::App;
 
 mod handlers;
+mod model;
+mod schema;
 
 #[derive(Clone)]
 pub struct Server {}
 
 impl Server {
     pub fn new() -> Self {
-        Server{}
+        Server {}
     }
 }
 
 // ルーティング
-pub fn app(server: Server)->App<Server> {
+pub fn app(server: Server) -> App<Server> {
     use crate::handlers::*;
 
     let app: App<Server> = App::with_state(server)
-    .route("/logs", Method::POST, handle_post_logs)
-    .route("/csv", Method::POST, handle_post_csv)
-    .route("/csv", Method::GET, handle_get_csv)
-    .route("/logs", Method::GET, handle_get_logs);
+        .route("/logs", Method::POST, handle_post_logs)
+        .route("/csv", Method::POST, handle_post_csv)
+        .route("/csv", Method::GET, handle_get_csv)
+        .route("/logs", Method::GET, handle_get_logs);
 
     app
 }
